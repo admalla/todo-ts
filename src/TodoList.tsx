@@ -34,6 +34,16 @@ function TodoList(props: propsType) {
     }
   };
 
+  const onRemoveHandler = (id: string) => {
+    props.removeTask(id);
+  };
+  const onClickHandler = (
+    id: string,
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
+    props.addCheckboxTask(id, e.currentTarget.checked);
+  };
+
   return (
     <div className="task">
       <h3>{props.title}</h3>
@@ -48,15 +58,6 @@ function TodoList(props: propsType) {
 
       <ul>
         {props.tasks.map((task) => {
-          const onRemoveHandler = () => {
-            props.removeTask(task.id);
-          };
-          const onClickHandler = (
-            id: string,
-            e: React.MouseEvent<HTMLInputElement, MouseEvent>
-          ) => {
-            props.addCheckboxTask(id, e.currentTarget.checked);
-          };
           return (
             <li key={task.id}>
               <input
@@ -65,7 +66,7 @@ function TodoList(props: propsType) {
                 onClick={(e) => onClickHandler(task.id, e)}
               />
               <span>{task.title}</span>
-              <button onClick={onRemoveHandler}>x</button>
+              <button onClick={() => onRemoveHandler(task.id)}>x</button>
             </li>
           );
         })}
